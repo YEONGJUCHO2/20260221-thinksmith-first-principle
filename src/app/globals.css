@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #f46a25;
+  --color-background-dark: #0a0a0a;
+  --color-forge-deep: #1a0f0a;
+  --color-ember: #ff4d00;
+  --color-cooling-teal: #0f172a;
+
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+@utility glass-morphism {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@utility bg-glow {
+  background: radial-gradient(circle at center, rgba(244, 106, 37, 0.15) 0%, rgba(10, 10, 10, 1) 70%);
+}
+
+@utility ember-glow {
+  box-shadow: 0 0 20px rgba(244, 106, 37, 0.4);
+}
+
+@utility forge-gradient {
+  background: linear-gradient(135deg, #f46a25 0%, #d94e0d 100%);
+}
+
+@utility molten-border {
+  &:focus-within {
+    border-color: #ff4d00;
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+  }
+}
+
+body {
+  background: var(--color-background-dark);
+  color: #ededed;
+}
+
+@keyframes the-strike {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  20% {
+    transform: rotate(100deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  30% {
+    transform: rotate(10deg);
+  }
+
+  35% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes spark-1 {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(0) translate(-40px, -60px);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes spark-2 {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(0) translate(40px, -50px);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes spark-3 {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(0) translate(-20px, -80px);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@utility animate-the-strike {
+  animation: the-strike 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+@utility animate-spark-1 {
+  animation: spark-1 1.2s ease-out infinite;
+}
+
+@utility animate-spark-2 {
+  animation: spark-2 1.2s ease-out infinite;
+}
+
+@utility animate-spark-3 {
+  animation: spark-3 1.2s ease-out infinite;
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@utility animate-pop-in {
+  animation: pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
