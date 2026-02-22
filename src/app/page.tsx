@@ -56,29 +56,20 @@ export default function Home() {
     setStep(4);
   };
 
-  const saveToFirebase = async () => {
+  const handleExportEmail = () => {
     if (!user) {
       setShowLogin(true);
       return;
     }
 
-    setIsSaving(true);
-    try {
-      await addDoc(collection(db, "first_principles"), {
-        userId: user.uid,
-        problem,
-        assumptions,
-        coreTruth,
-        solution,
-        createdAt: serverTimestamp(),
-      });
-      setSaveSuccess(true);
-    } catch (e: any) {
-      console.error("Firestore Save Error:", e);
-      alert(`저장 실패: ${e.message}\nFirebase 설정을 확인해주세요.`);
-    } finally {
-      setIsSaving(false);
-    }
+    const subject = encodeURIComponent("🚀 [Thinksmith] 나의 제1원칙 문제 해결 결과");
+    const body = encodeURIComponent(
+      `[초기 직면한 문제]\n${problem}\n\n[파헤쳐낸 절대 진리 (Core Truth)]\n${coreTruth}\n\n[나만의 파격적 해결책]\n${solution}\n\n--- Thinksmith 앱에서 작성됨.`
+    );
+
+    const gmailLink = `https://mail.google.com/mail/u/${user.email}/?view=cm&fs=1&to=${user.email}&su=${subject}&body=${body}`;
+    window.open(gmailLink, '_blank');
+    setSaveSuccess(true);
   };
 
   const handleRestart = () => {
@@ -101,8 +92,8 @@ export default function Home() {
         </div>
         <Login onLoginSuccess={() => {
           setShowLogin(false);
-          // If we are at Step 4, we likely wanted to save immediately
-          if (step === 4) saveToFirebase();
+          // If we are at Step 4, we likely wanted to export immediately
+          if (step === 4) handleExportEmail();
         }} />
       </div>
     );
@@ -119,7 +110,7 @@ export default function Home() {
         problem={problem}
         coreTruth={coreTruth}
         solution={solution}
-        onSaveToFirebase={saveToFirebase}
+        onSaveToFirebase={handleExportEmail}
         onRestart={handleRestart}
         isSaving={isSaving}
         saveSuccess={saveSuccess}
