@@ -61,21 +61,34 @@ export default function ResultPoster({
     const handleDownloadImage = async () => {
         if (!posterRef.current) return;
         try {
+            // Small delay to ensure rendering is complete
+            await new Promise(r => setTimeout(r, 100));
+
             const canvas = await html2canvas(posterRef.current, {
                 scale: 2, // High resolution
                 backgroundColor: '#0F1115', // Match background-dark
                 useCORS: true,
+                allowTaint: true,
                 logging: false,
             });
 
-            const image = canvas.toDataURL("image/jpeg", 0.9);
+            const image = canvas.toDataURL("image/png", 1.0);
             const link = document.createElement('a');
+            link.style.display = 'none';
             link.href = image;
-            link.download = `thinksmith-insight-${Date.now()}.jpg`;
+            link.download = `thinksmith-insight-${Date.now()}.png`;
+
+            // Append to body is strictly required for Firefox/Chrome on PC sometimes
+            document.body.appendChild(link);
             link.click();
+
+            // Cleanup
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 100);
         } catch (error) {
             console.error("Failed to generate image:", error);
-            alert("이미지 저장에 실패했습니다.");
+            alert("이미지 저장에 실패했습니다. 데스크탑에서는 브라우저 캐시를 지우고 다시 시도해보세요.");
         }
     };
 
