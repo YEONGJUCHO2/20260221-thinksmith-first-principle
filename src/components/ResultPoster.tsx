@@ -97,7 +97,7 @@ export default function ResultPoster({
                     <span className="text-white/80 text-[10px] font-bold tracking-widest uppercase relative z-10 border border-white/20 px-2 py-0.5 rounded-full">Master Plan</span>
                 </div>
 
-                <div className="p-6 space-y-6 bg-[url('/noise.png')] bg-repeat opacity-95">
+                <div className="p-6 space-y-6 opacity-95">
                     {/* Problem -> Truth Flow */}
                     <div className="flex flex-col space-y-4">
                         <div className="bg-slate-800/50 rounded-2xl p-4 border border-white/5 relative">
@@ -198,15 +198,15 @@ export default function ResultPoster({
                     <button
                         onClick={onSaveToFirebase}
                         disabled={isSaving}
-                        className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ff4d00] to-primary text-background-dark font-black tracking-wide flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(244,106,37,0.4)] disabled:opacity-50"
+                        className="w-full py-4 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white font-black tracking-wide flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] disabled:opacity-50"
                     >
-                        {isSaving ? "저장 중..." : "행동 다짐하고 커뮤니티에 박제하기"}
-                        <span className="material-symbols-outlined">public</span>
+                        {isSaving ? "이메일 창 띄우는 중..." : "나의 다짐 이메일로 내보내기"}
+                        <span className="material-symbols-outlined">mail</span>
                     </button>
                 ) : (
                     <div className="w-full py-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 font-bold flex items-center justify-center gap-2">
-                        <span className="material-symbols-outlined">verified</span>
-                        박제 완료! 스스로와의 약속을 지키세요.
+                        <span className="material-symbols-outlined">mark_email_read</span>
+                        이메일 앱이 열렸습니다. 전송을 완료하세요!
                     </div>
                 )}
 
