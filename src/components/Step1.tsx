@@ -50,8 +50,16 @@ export default function Step1({ problem, onNext, onBack }: Step1Props) {
             const data = await res.json();
 
             if (data.result) {
-                if (data.result.isRootCauseFound && data.result.coreTruth) {
-                    onNext(data.result.coreTruth);
+                const isConcluded = data.result.isRootCauseFound === true || data.result.isRootCauseFound === "true" || history.length >= 10;
+
+                if (isConcluded) {
+                    // Try to find the exact key, or fall back to any reasonable string value Gemini might have returned
+                    let fallbackTruth = data.result.coreTruth || data.result.rootCause || data.result.nextQuestion;
+                    if (!fallbackTruth) {
+                        const possibleTruth = Object.values(data.result).find(v => typeof v === 'string' && v.length > 15 && v.length < 300);
+                        fallbackTruth = possibleTruth || "더 이상 쪼갤 수 없는 근원적 갈망/원인에 도달했습니다.";
+                    }
+                    onNext(fallbackTruth as string);
                 } else if (data.result.nextQuestion) {
                     setChatHistory(prev => [...prev, { role: 'ai', content: data.result.nextQuestion }]);
                     if (data.result.options && Array.isArray(data.result.options)) {
