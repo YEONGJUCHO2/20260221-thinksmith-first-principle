@@ -68,7 +68,6 @@ export default function ResultPoster({
                 scale: 2, // High resolution
                 backgroundColor: '#0F1115', // Match background-dark
                 useCORS: true,
-                allowTaint: true,
                 logging: false,
             });
 
@@ -86,9 +85,9 @@ export default function ResultPoster({
             setTimeout(() => {
                 document.body.removeChild(link);
             }, 100);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Failed to generate image:", error);
-            alert("이미지 저장에 실패했습니다. 데스크탑에서는 브라우저 캐시를 지우고 다시 시도해보세요.");
+            alert(`이미지 저장에 실패했습니다. (원인: ${error?.message || String(error)})`);
         }
     };
 
